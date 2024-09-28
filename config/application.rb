@@ -28,5 +28,6 @@ module StockPro
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
+    config.hosts << '3000-rakesh9907-protrader-fro-d3bzhf2f5v.app.codeanywhere.com'
   end
 end

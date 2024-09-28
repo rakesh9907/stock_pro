@@ -5,6 +5,9 @@ class CreateTechnicals < ActiveRecord::Migration[7.2]
       t.decimal :rsi
       t.decimal :rs
       t.date :date
+      t.decimal :ema_20
+      t.decimal :ema_50
+      t.decimal :ema_200
 
       t.timestamps
     end

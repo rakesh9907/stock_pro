@@ -95,6 +95,9 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_28_045729) do
     t.decimal "rsi"
     t.decimal "rs"
     t.date "date"
+    t.decimal "ema_20"
+    t.decimal "ema_50"
+    t.decimal "ema_200"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["stock_id"], name: "index_technicals_on_stock_id"

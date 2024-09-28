@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -7,4 +8,17 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
+  # 
+  resources :sectors
+  
+  resources :sectors do
+    resources :industries, only: [:index, :create] # Nested routes if needed
+  end
+  resources :industries, only: [:show, :update, :destroy]
+
+  resources :industries do
+    resources :stocks, only: [:index, :create] # Nested routes if you want
+  end
+  resources :stocks, only: [:show, :update, :destroy]
+  
 end

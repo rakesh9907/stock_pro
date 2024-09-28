@@ -1,5 +1,5 @@
 class ExternalApiService
-  BASE_URL = 'https://api.example.com'
+  BASE_URL = 'https://www.nseindia.com'
 
   def initialize
 

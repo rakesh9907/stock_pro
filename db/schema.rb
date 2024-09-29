@@ -43,6 +43,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_28_045729) do
     t.date "date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["industry_id", "date"], name: "index_industry_deliveries_on_industry_id_and_date", unique: true
     t.index ["industry_id"], name: "index_industry_deliveries_on_industry_id"
   end
 

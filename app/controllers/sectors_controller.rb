@@ -3,6 +3,7 @@ class SectorsController < ApplicationController
   before_action :set_sector, only: [:show, :update, :destroy]
 
   def index
+    # get_response = DeliveryApiService.new.deliver_data('TCS', '23-09-2024', '27-09-2024')
     @sectors = Sector.all
     render json: @sectors, each_serializer: SectorSerializer
   end

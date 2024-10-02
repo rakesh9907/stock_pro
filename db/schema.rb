@@ -10,7 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_10_01_131210) do
+ActiveRecord::Schema[7.2].define(version: 2024_10_02_091400) do
+  create_table "bookmarks", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "deliveries", force: :cascade do |t|
     t.integer "stock_id", null: false
     t.decimal "quantity"
@@ -38,8 +44,8 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_01_131210) do
     t.decimal "quantity"
     t.decimal "percentage"
     t.decimal "volume"
-    t.time "delivery_time"
-    t.time "volume_time"
+    t.decimal "delivery_time"
+    t.decimal "volume_time"
     t.date "date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -68,8 +74,8 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_01_131210) do
     t.decimal "quantity"
     t.decimal "percentage"
     t.decimal "volume"
-    t.time "delivery_time"
-    t.time "volume_time"
+    t.decimal "delivery_time"
+    t.decimal "volume_time"
     t.date "date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -92,6 +98,17 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_01_131210) do
     t.index ["industry_id"], name: "index_stocks_on_industry_id"
   end
 
+  create_table "sub_bookmarks", force: :cascade do |t|
+    t.integer "stock_id", null: false
+    t.integer "bookmark_id", null: false
+    t.decimal "added_price"
+    t.datetime "added_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["bookmark_id"], name: "index_sub_bookmarks_on_bookmark_id"
+    t.index ["stock_id"], name: "index_sub_bookmarks_on_stock_id"
+  end
+
   create_table "technicals", force: :cascade do |t|
     t.integer "stock_id", null: false
     t.decimal "rsi"
@@ -111,5 +128,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_01_131210) do
   add_foreign_key "prices", "stocks"
   add_foreign_key "sector_deliveries", "sectors"
   add_foreign_key "stocks", "industries"
+  add_foreign_key "sub_bookmarks", "bookmarks"
+  add_foreign_key "sub_bookmarks", "stocks"
   add_foreign_key "technicals", "stocks"
 end

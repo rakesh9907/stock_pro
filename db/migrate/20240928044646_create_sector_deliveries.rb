@@ -5,8 +5,8 @@ class CreateSectorDeliveries < ActiveRecord::Migration[7.2]
       t.decimal :quantity
       t.decimal :percentage
       t.decimal :volume
-      t.time :delivery_time
-      t.time :volume_time
+      t.decimal :delivery_time
+      t.decimal :volume_time
       t.date :date
 
       t.timestamps

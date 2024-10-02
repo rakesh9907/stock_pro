@@ -3,9 +3,8 @@ class DeliveryApiService < ExternalApiService
     super
   end
 
-  def deliver_data(symbol, start_date, end_date)
-    puts symbol, start_date, end_date
-    url = "/stock/#{symbol}/delivery?start_date=#{start_date}&end_date=#{end_date}"
+  def deliver_data(symbol, date)
+    url = "/stock/#{symbol}/delivery?date=#{date}"
     get_data(url)
   end
 end

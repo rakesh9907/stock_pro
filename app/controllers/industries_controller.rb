@@ -46,6 +46,6 @@ class IndustriesController < ApplicationController
   end
 
   def industry_params
-    params.require(:industry).permit(:name, :sector_id)
+    params.permit(:name, :sector_id)
   end
 end

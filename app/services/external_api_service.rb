@@ -1,6 +1,7 @@
 class ExternalApiService
   # BASE_URL = 'https://www.nseindia.com'
-  BASE_URL = 'https://verbose-space-potato-v6pgw5p56rxvfpw4v-5001.app.github.dev'
+  # BASE_URL = 'https://verbose-space-potato-v6pgw5p56rxvfpw4v-5001.app.github.dev'
+  BASE_URL = ' https://c7ed-4-240-39-197.ngrok-free.app'
 
   def initialize
     @connection = Faraday.new(url: BASE_URL) do |conn|

@@ -10,14 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_09_28_045729) do
+ActiveRecord::Schema[7.2].define(version: 2024_10_01_131210) do
   create_table "deliveries", force: :cascade do |t|
     t.integer "stock_id", null: false
     t.decimal "quantity"
     t.decimal "percentage"
     t.decimal "volume"
-    t.time "delivery_time"
-    t.time "volume_time"
+    t.decimal "delivery_time"
+    t.decimal "volume_time"
     t.date "date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -88,6 +88,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_28_045729) do
     t.integer "industry_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "symbol"
     t.index ["industry_id"], name: "index_stocks_on_industry_id"
   end
 

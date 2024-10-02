@@ -21,4 +21,9 @@ Rails.application.routes.draw do
   end
   resources :stocks, only: [:show, :update, :destroy]
   
+  resources :deliveries, only: [] do
+    collection do
+      get 'fetch', to: 'deliveries#fetch_delivery'
+    end
+  end
 end

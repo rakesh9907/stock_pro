@@ -24,8 +24,8 @@ class SectorDataJob < ApplicationJob
     total_sector_deliver = sector_deliveries.sum(:quantity)
     total_sector_volume = sector_deliveries.sum(:volume)
 
-    delivery_time = total_sector_deliver / total_delivery
-    volume_time = total_sector_volume / total_volume
+    delivery_time = total_delivery / (total_sector_deliver / 5)
+    volume_time = total_volume / (total_sector_volume / 5 )
 
     SectorDelivery.create(
       sector_id: sector.id,

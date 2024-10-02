@@ -26,4 +26,8 @@ Rails.application.routes.draw do
       get 'fetch', to: 'deliveries#fetch_delivery'
     end
   end
+
+  resources :bookmarks do
+    resources :sub_bookmarks
+  end
 end

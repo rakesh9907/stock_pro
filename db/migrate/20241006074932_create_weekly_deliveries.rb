@@ -1,6 +1,6 @@
-class CreateWeeklies < ActiveRecord::Migration[7.2]
+class CreateWeeklyDeliveries < ActiveRecord::Migration[7.2]
   def change
-    create_table :weeklies do |t|
+    create_table :weekly_deliveries do |t|
       t.references :stock, null: false, foreign_key: true
       t.date :start_date
       t.date :end_date

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_10_06_070834) do
+ActiveRecord::Schema[7.2].define(version: 2024_10_06_074932) do
   create_table "bookmarks", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -125,7 +125,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_06_070834) do
     t.index ["stock_id"], name: "index_technicals_on_stock_id"
   end
 
-  create_table "weeklies", force: :cascade do |t|
+  create_table "weekly_deliveries", force: :cascade do |t|
     t.integer "stock_id", null: false
     t.date "start_date"
     t.date "end_date"
@@ -137,7 +137,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_06_070834) do
     t.decimal "total_trades"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["stock_id"], name: "index_weeklies_on_stock_id"
+    t.index ["stock_id"], name: "index_weekly_deliveries_on_stock_id"
   end
 
   add_foreign_key "deliveries", "stocks"
@@ -149,5 +149,5 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_06_070834) do
   add_foreign_key "sub_bookmarks", "bookmarks"
   add_foreign_key "sub_bookmarks", "stocks"
   add_foreign_key "technicals", "stocks"
-  add_foreign_key "weeklies", "stocks"
+  add_foreign_key "weekly_deliveries", "stocks"
 end

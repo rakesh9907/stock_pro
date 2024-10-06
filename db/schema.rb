@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_10_02_091400) do
+ActiveRecord::Schema[7.2].define(version: 2024_10_06_070834) do
   create_table "bookmarks", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -27,6 +27,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_02_091400) do
     t.date "date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.decimal "trades"
     t.index ["stock_id", "date"], name: "index_deliveries_on_stock_id_and_date", unique: true
     t.index ["stock_id"], name: "index_deliveries_on_stock_id"
   end
@@ -49,6 +50,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_02_091400) do
     t.date "date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.decimal "trades"
     t.index ["industry_id", "date"], name: "index_industry_deliveries_on_industry_id_and_date", unique: true
     t.index ["industry_id"], name: "index_industry_deliveries_on_industry_id"
   end
@@ -79,6 +81,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_02_091400) do
     t.date "date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.decimal "trades"
     t.index ["sector_id", "date"], name: "index_sector_deliveries_on_sector_id_and_date", unique: true
     t.index ["sector_id"], name: "index_sector_deliveries_on_sector_id"
   end
@@ -122,6 +125,21 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_02_091400) do
     t.index ["stock_id"], name: "index_technicals_on_stock_id"
   end
 
+  create_table "weeklies", force: :cascade do |t|
+    t.integer "stock_id", null: false
+    t.date "start_date"
+    t.date "end_date"
+    t.decimal "delivery"
+    t.decimal "percentage"
+    t.decimal "volume"
+    t.decimal "delivery_time"
+    t.decimal "volume_time"
+    t.decimal "total_trades"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["stock_id"], name: "index_weeklies_on_stock_id"
+  end
+
   add_foreign_key "deliveries", "stocks"
   add_foreign_key "industries", "sectors"
   add_foreign_key "industry_deliveries", "industries"
@@ -131,4 +149,5 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_02_091400) do
   add_foreign_key "sub_bookmarks", "bookmarks"
   add_foreign_key "sub_bookmarks", "stocks"
   add_foreign_key "technicals", "stocks"
+  add_foreign_key "weeklies", "stocks"
 end

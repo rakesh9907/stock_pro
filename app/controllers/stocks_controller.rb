@@ -1,9 +1,15 @@
 class StocksController < ApplicationController
   before_action :set_stock, only: [:show, :update, :destroy]
+  before_action :set_industry, only: [ :industry_stocks ]
 
   # GET /stocks
   def index
-    @stocks = Stock.all.includes(:industry) # Eager load industries
+    @stocks = Stock.all# Eager load industries
+    render json: @stocks, each_serializer: StockSerializer
+  end
+
+  def industry_stocks
+    @stocks = @industry.stocks
     render json: @stocks, each_serializer: StockSerializer
   end
 
@@ -39,6 +45,12 @@ class StocksController < ApplicationController
 
   private
 
+  def set_industry
+    @industry = Industry.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    render json: { error: 'Industry not found' }, status: :not_found
+  end
+
   def set_stock
     @stock = Stock.find(params[:id])
   rescue ActiveRecord::RecordNotFound
@@ -46,6 +58,6 @@ class StocksController < ApplicationController
   end
 
   def stock_params
-    params.permit(:name, :industry_id)
+    params.permit(:name, :symbol, :industry_id)
   end
 end

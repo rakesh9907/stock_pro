@@ -10,7 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_10_06_074932) do
+ActiveRecord::Schema[7.2].define(version: 2024_10_11_083518) do
+  create_table "alerts", force: :cascade do |t|
+    t.integer "stock_id", null: false
+    t.integer "price_id", null: false
+    t.boolean "status", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["price_id"], name: "index_alerts_on_price_id"
+    t.index ["stock_id"], name: "index_alerts_on_stock_id"
+  end
+
   create_table "bookmarks", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -140,6 +150,8 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_06_074932) do
     t.index ["stock_id"], name: "index_weekly_deliveries_on_stock_id"
   end
 
+  add_foreign_key "alerts", "prices"
+  add_foreign_key "alerts", "stocks"
   add_foreign_key "deliveries", "stocks"
   add_foreign_key "industries", "sectors"
   add_foreign_key "industry_deliveries", "industries"

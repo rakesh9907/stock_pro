@@ -12,18 +12,22 @@ Rails.application.routes.draw do
   resources :sectors
   
   resources :sectors do
-    resources :industries, only: [:index, :create] # Nested routes if needed
+    resources :industries, only: [:index, :create]
   end
   resources :industries, only: [:show, :update, :destroy]
 
   resources :industries do
-    resources :stocks, only: [:index, :create] # Nested routes if you want
+    resources :stocks, only: [:create]
+    member do
+      get 'industry_stocks', to: 'stocks#industry_stocks'
+    end
   end
-  resources :stocks, only: [:show, :update, :destroy]
+  resources :stocks, only: [:index,:show, :update, :destroy]
   
   resources :deliveries, only: [] do
     collection do
       get 'fetch', to: 'deliveries#fetch_delivery'
+      get 'weekly', to: 'deliveries#weekly_delivery'
     end
   end
 

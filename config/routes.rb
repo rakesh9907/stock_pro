@@ -28,6 +28,9 @@ Rails.application.routes.draw do
     collection do
       get 'fetch', to: 'deliveries#fetch_delivery'
       get 'weekly', to: 'deliveries#weekly_delivery'
+      get 'sector', to: 'deliveries#delivery_sector'
+      get 'industries', to: 'deliveries#delivery_industry'
+      get 'stock', to: 'deliveries#delivery_stock'
     end
   end
 

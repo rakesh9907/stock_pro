@@ -44,14 +44,14 @@ class DeliveriesController < ApplicationController
   # end
 
   def delivery_sector
-    render json: fetch_deliveries(Sector, :sector_deliveries), each_serializer: SectorSerializer
+    render json: fetch_deliveries(params, Sector, :sector_deliveries), each_serializer: SectorSerializer
   end
 
   def delivery_industry
-    render json: fetch_deliveries(Industry, :industry_deliveries), each_serializer: IndustrySerializer
+    render json: fetch_deliveries(params, Industry, :industry_deliveries), each_serializer: IndustrySerializer
   end
   def delivery_stock
-    render json: fetch_deliveries(Stock, :deliveries), each_serializer: StockSerializer
+    render json: fetch_deliveries(params, Stock, :deliveries), each_serializer: StockSerializer
   end
 
   # 1 filter stocks which have 1.5 times delivery
@@ -68,7 +68,7 @@ class DeliveriesController < ApplicationController
 
   private
 
-  def fetch_deliveries(model_class, association_name)
+  def fetch_deliveries(params, model_class, association_name)
     date = params['date'] || Date.today.strftime("%d-%m-%y")
     model_class.joins(association_name) 
                 .where("#{association_name.to_s.singularize}.delivery_time > ?", 1.5)

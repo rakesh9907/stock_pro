@@ -7,3 +7,4 @@ class CreateAlerts < ActiveRecord::Migration[7.2]
     end
   end
 end
+te

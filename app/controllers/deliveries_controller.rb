@@ -34,7 +34,7 @@ class DeliveriesController < ApplicationController
   end
 
   # def delivery_stock
-    date = params['date'] || Date.today.strftime("%d-%m-%y")
+    #date = params['date'] || Date.today.strftime("%d-%m-%y")
     # delivery_stock = Stock.joins(:deliveries)
     #                  .where('deliveries.delivery_time > ?', 1.5)
     #                  .where(deliveries: { date: date })

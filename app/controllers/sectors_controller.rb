@@ -4,6 +4,7 @@ class SectorsController < ApplicationController
 
   def index
     # get_response = DeliveryApiService.new.deliver_data('TCS', '30-09-2024')
+    puts ExternalApiService.new.final_data
     @sectors = Sector.all
     render json: @sectors, each_serializer: SectorSerializer
   end

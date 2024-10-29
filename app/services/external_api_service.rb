@@ -14,13 +14,13 @@ class ExternalApiService
   }
 
   def initialize
-    response = HTTParty.get(BASE_URL, headers: QUOTE_HEADERS)
+    response = HTTParty.get(BASE_URL, headers: QUOTE_HEADERS, timeout: 120)
     @cookies = response.headers['set-cookie'].to_s.split(',').map(&:strip).join('; ')
   end
 
   def fetch_delivery(symbol, start_date, end_date) 
     target_url = "https://www.nseindia.com/api/historical/securityArchives?from=#{start_date}&to=#{end_date}&symbol=#{symbol}&dataType=priceVolumeDeliverable&series=ALL"
-    response = HTTParty.get(target_url, headers: QUOTE_HEADERS.merge!({'Cookie' => @cookies}))
+    response = HTTParty.get(target_url, headers: QUOTE_HEADERS.merge!({'Cookie' => @cookies}), timeout: 120)
     response.success? ? JSON.parse(response.body) : nil
   end
 

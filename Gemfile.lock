@@ -156,6 +156,8 @@ GEM
     parser (3.3.5.0)
       ast (~> 2.4.1)
       racc
+    pg (1.5.9)
+    pg (1.5.9-x64-mingw-ucrt)
     pry (0.14.2)
       coderay (~> 1.1)
       method_source (~> 1.0)
@@ -287,6 +289,7 @@ DEPENDENCIES
   brakeman
   debug
   httparty
+  pg
   pry
   puma (>= 5.0)
   rails (~> 7.2.1)

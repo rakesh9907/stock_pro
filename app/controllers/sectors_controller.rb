@@ -4,7 +4,6 @@ class SectorsController < ApplicationController
 
   def index
     # get_response = DeliveryApiService.new.deliver_data('TCS', '30-09-2024')
-    puts ExternalApiService.new.final_data
     @sectors = Sector.all
     render json: @sectors, each_serializer: SectorSerializer
   end
@@ -35,6 +34,11 @@ class SectorsController < ApplicationController
   def destroy
     @sector.destroy
     head :no_content
+  end
+
+  def test
+    data = ExternalApiService.new.final_data('TCS', "24-10-2024")
+    render json: data.to_json
   end
 
   private

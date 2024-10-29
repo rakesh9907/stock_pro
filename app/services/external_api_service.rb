@@ -18,17 +18,15 @@ class ExternalApiService
     @cookies = response.headers['set-cookie'].to_s.split(',').map(&:strip).join('; ')
   end
 
-  def fetch_delivery(symbol, start_date, end_date)
-    start_date = '15-10-2024'
-    end_date = '25-10-2024' 
+  def fetch_delivery(symbol, start_date, end_date) 
     target_url = "https://www.nseindia.com/api/historical/securityArchives?from=#{start_date}&to=#{end_date}&symbol=#{symbol}&dataType=priceVolumeDeliverable&series=ALL"
     response = HTTParty.get(target_url, headers: QUOTE_HEADERS.merge!({'Cookie' => @cookies}))
     response.success? ? JSON.parse(response.body) : nil
   end
 
   def final_data(symbol, date)
-    start_date = ''
-    end_date = ''
+    start_date = '15-10-2024'
+    end_date = '25-10-2024'
     data = fetch_delivery('SBIN', start_date, end_date)["data"].reverse
     current_data = data[0]
     rest_data = data[1..-1]

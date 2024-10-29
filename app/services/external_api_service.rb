@@ -33,8 +33,9 @@ class ExternalApiService
     current_data = data[0]
     rest_data = data[1..-1]
     final_data = rest_data.first(5)
-    if final_data.length < 5 return "Data should be grether then 5"
-
+    if final_data.length < 5
+      return "Data should be grether then 5"
+    end
     high_price = current_data['CH_TRADE_HIGH_PRICE']
     low_price = current_data['CH_TRADE_LOW_PRICE']
     open_price = current_data['CH_OPENING_PRICE']

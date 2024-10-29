@@ -37,8 +37,8 @@ class SectorsController < ApplicationController
   end
 
   def test
-    data = ExternalApiService.new.final_data('TCS', "24-10-2024")
-    render json: data.to_json
+    NseDataJob.perform_later('TCS', "24-10-2024")
+    render json: {message: "Taking pull of data"}.to_json
   end
 
   private

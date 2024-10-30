@@ -29,5 +29,7 @@ module StockPro
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
     # config.hosts << "130e-13-71-3-97.ngrok-free.app"
+    config.time_zone = 'Asia/Kolkata'
+    config.active_record.default_timezone = :utc
   end
 end

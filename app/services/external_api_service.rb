@@ -1,7 +1,7 @@
 class ExternalApiService
   include HTTParty
 
-  BASE_URL = 'https://www.nseindia.com'
+  BASE_URL = 'http://www.nseindia.com'
 
   QUOTE_HEADERS = {
     "Host" => "www.nseindia.com",
@@ -9,7 +9,7 @@ class ExternalApiService
     "Accept" => "*/*",
     "X-Requested-With" => "XMLHttpRequest",
     "User-Agent" => "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.75 Safari/537.36",
-    "Referer" => "https://www.nseindia.com/report-detail/eq_security"
+    "Referer" => "http://www.nseindia.com/report-detail/eq_security"
   }
 
   MAX_RETRIES = 3
@@ -22,7 +22,7 @@ class ExternalApiService
   end
 
   def fetch_delivery(symbol, start_date, end_date)
-    target_url = "https://www.nseindia.com/api/historical/securityArchives?from=#{start_date}&to=#{end_date}&symbol=#{symbol}&dataType=priceVolumeDeliverable&series=ALL"
+    target_url = "http://www.nseindia.com/api/historical/securityArchives?from=#{start_date}&to=#{end_date}&symbol=#{symbol}&dataType=priceVolumeDeliverable&series=ALL"
     
     retries = 0
 

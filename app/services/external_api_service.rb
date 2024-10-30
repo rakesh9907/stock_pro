@@ -6,10 +6,10 @@ class ExternalApiService
   QUOTE_HEADERS = {
     "Host" => "www.nseindia.com",
     "Connection" => "keep-alive",
-    "Accept" => "*/*",
+    'Accept' => 'application/json, text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
     "X-Requested-With" => "XMLHttpRequest",
+    'Accept-Language' => 'en-US,en;q=0.9',
     "User-Agent" => "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.75 Safari/537.36",
-    "Referer" => "http://www.nseindia.com/report-detail/eq_security"
   }
 
   MAX_RETRIES = 3

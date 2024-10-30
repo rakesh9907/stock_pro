@@ -1,10 +1,10 @@
 class ExternalApiService
   include HTTParty
 
-  BASE_URL = 'http://www.nseindia.com'
+  BASE_URL = 'https://www.google.com'
 
   QUOTE_HEADERS = {
-    "Host" => "www.nseindia.com",
+    "Host" => "www.google.com",
     "Connection" => "keep-alive",
     'Accept' => 'application/json, text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
     "X-Requested-With" => "XMLHttpRequest",

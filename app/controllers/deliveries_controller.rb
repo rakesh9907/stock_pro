@@ -1,15 +1,17 @@
 class DeliveriesController < ApplicationController
 
+  def get_delivery
+    StockDataJob.perform_later(delivery_params, price_params)
+    render json: { message: 'Delivery are updating'}
+  end
+
   def fetch_delivery
-    stocks = Stock.all
     sectors = Sector.all
     industries = Industry.all
-    date = params['date']
     
-    stocks.each do |stock|
-      StockDataJob.perform_now(stock.symbol, date)
-      WeeklyDataJob.perform_now(stock.symbol, data)
-    end
+    # stocks.each do |stock|
+    #   StockDataJob.perform_now(stock.symbol, date)
+    # end
     
     industries.each do |industry|
       IndustryDataJob.perform_now(industry.id, date)
@@ -32,16 +34,6 @@ class DeliveriesController < ApplicationController
     end
     render json: {message: "Weekly delivery Updating"}
   end
-
-  # def delivery_stock
-    #date = params['date'] || Date.today.strftime("%d-%m-%y")
-    # delivery_stock = Stock.joins(:deliveries)
-    #                  .where('deliveries.delivery_time > ?', 1.5)
-    #                  .where(deliveries: { date: date })
-    #                    .distinct # it will return only return unique stock for those date
-
-  #   render json: delivery_stock, each_serializer: StockSerializer
-  # end
 
   def delivery_sector
     render json: fetch_deliveries(params, Sector, :sector_deliveries), each_serializer: SectorSerializer
@@ -68,6 +60,32 @@ class DeliveriesController < ApplicationController
 
   private
 
+  def delivery_params
+    params.permit(
+      :stock_id,
+      :quantity,
+      :percentage,
+      :volume,
+      :delivery_time,
+      :volume_time,
+      :date,
+      :trades
+    )
+  end
+
+  def price_params
+    params.permit(
+      :stock_id,
+      :open,
+      :close,
+      :high,
+      :low,
+      :date,
+      :fifty_two_week_high,
+      :fifty_two_week_low,
+      :vwap
+    )
+  end
   def fetch_deliveries(params, model_class, association_name)
     date = params['date'] || Date.today.strftime("%d-%m-%y")
     model_class.joins(association_name) 

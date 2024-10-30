@@ -1,32 +1,9 @@
 class StockDataJob < ApplicationJob
   queue_as :default
 
-  def perform(symbol, date)
-    stock = Stock.find_by(symbol: symbol)
-    return unless stock
-    get_response = DeliveryApiService.new.deliver_data(symbol, date)
-    data = get_response['data']
-    Delivery.create(
-      stock_id: stock.id,
-      quantity: data["delivery_qty"],
-      percentage: data["delivery_perc"],
-      volume: data['traded_qty'],
-      delivery_time: data['delivery_time'],
-      volume_time: data['volume_time'],
-      date: data['date']
-    )
-
-    Price.create(
-      stock_id: stock.id,
-      open: data['open'],
-      close: data['close'],
-      high: data['high'],
-      low: data['low'],
-      date: data['date'],
-      vwap: data['vwap'],
-      fifty_two_week_high: data['week_52_high_price'],
-      fifty_two_week_low: data['week_52_low_price']
-    )
+  def perform(delivery_params, price_params)
+    Delivery.create(delivery_params)
+    Price.create(price_params)
   end
 end
 

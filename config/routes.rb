@@ -9,11 +9,7 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
   # 
-  resources :sectors do
-    collection do
-      get "test", to: 'sectors#test'
-    end
-  end
+  resources :sectors
   
   resources :sectors do
     resources :industries, only: [:index, :create]
@@ -30,6 +26,7 @@ Rails.application.routes.draw do
   
   resources :deliveries, only: [] do
     collection do
+      post 'get', to: 'deliveries#get_delivery'
       get 'fetch', to: 'deliveries#fetch_delivery'
       get 'weekly', to: 'deliveries#weekly_delivery'
       get 'sector', to: 'deliveries#delivery_sector'

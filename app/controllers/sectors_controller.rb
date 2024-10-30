@@ -35,12 +35,7 @@ class SectorsController < ApplicationController
     @sector.destroy
     head :no_content
   end
-
-  def test
-    NseDataJob.perform_later('TCS', "24-10-2024")
-    render json: {message: "Taking pull of data"}.to_json
-  end
-
+  
   private
 
   def set_sector

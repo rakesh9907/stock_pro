@@ -1,10 +1,14 @@
+require 'socket'
+require 'open-uri'
+require 'json'
+
 class ExternalApiService
   include HTTParty
 
-  BASE_URL = 'https://www.google.com'
+  BASE_URL = 'http://www.nseindia.com'
 
   QUOTE_HEADERS = {
-    "Host" => "www.google.com",
+    "Host" => "www.nseindia.com",
     "Connection" => "keep-alive",
     'Accept' => 'application/json, text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
     "X-Requested-With" => "XMLHttpRequest",
@@ -15,7 +19,7 @@ class ExternalApiService
   MAX_RETRIES = 3
 
   def initialize
-    Rails.logger.error("fetching cookies--------------")
+    Rails.logger.error("fetching cookies-------------- #{get_location}")
     response = HTTParty.get(BASE_URL, headers: QUOTE_HEADERS, timeout: 120)
     Rails.logger.error("Failed to fetch delivery data")
     @cookies = response.headers['set-cookie'].to_s.split(',').map(&:strip).join('; ')
@@ -110,4 +114,28 @@ class ExternalApiService
       volume_time: volume_time
     }
   end
+
+  def get_location
+    @ip_address = Socket.ip_address_list.detect(&:ipv4_private?).nil? ? 
+                  Socket.ip_address_list.detect(&:ipv4?).ip_address : 
+                  '127.0.0.1'
+
+    location_data = fetch_location(@ip_address)
+
+    if location_data && location_data["status"] == "success"
+      @city = location_data['city']
+      @region = location_data['region']
+      @country = location_data['country']
+    else
+      @error = "Unable to fetch location information."
+    end
+  end
+
+  private
+
+  def fetch_location(ip_address)
+    response = URI.open("http://ip-api.com/json/#{ip_address}").read
+    JSON.parse(response)
+  end
+
 end

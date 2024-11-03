@@ -9,16 +9,12 @@ class DeliveriesController < ApplicationController
     sectors = Sector.all
     industries = Industry.all
     
-    # stocks.each do |stock|
-    #   StockDataJob.perform_now(stock.symbol, date)
-    # end
-    
     industries.each do |industry|
-      IndustryDataJob.perform_now(industry.id, date)
+      IndustryDataJob.perform_later(industry.id, date)
     end
     
     sectors.each do |sector|
-      SectorDataJob.perform_now(sector.id, date)
+      SectorDataJob.perform_later(sector.id, date)
     end
     
     render json: {message: "Delivery Updating"}
@@ -86,6 +82,7 @@ class DeliveriesController < ApplicationController
       :vwap
     )
   end
+
   def fetch_deliveries(params, model_class, association_name)
     date = params['date'] || Date.today.strftime("%d-%m-%y")
     model_class.joins(association_name) 

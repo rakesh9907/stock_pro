@@ -58,6 +58,6 @@ class StocksController < ApplicationController
   end
 
   def stock_params
-    params.permit(:name, :symbol, :industry_id)
+    params.permit(:name, :symbol, :industry_id, :category)
   end
 end

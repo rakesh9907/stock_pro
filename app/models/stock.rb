@@ -4,5 +4,6 @@ class Stock < ApplicationRecord
   has_many :deliveries, dependent: :destroy
   has_many :technicals, dependent: :destroy
   has_many :alerts, dependent: :destroy
+  has_many :weekly_deliveries, dependent: :destroy
   validates :symbol, presence: true, uniqueness: true
 end

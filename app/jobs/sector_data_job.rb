@@ -18,7 +18,6 @@ class SectorDataJob < ApplicationJob
     end
     per = (total_delivery * 100) / total_volume
 
-    # industry_deliveries = industry.industry_deliveries.order(date: :desc).limit(5)
     sector_deliveries = sector.sector_deliveries.order(date: :desc).limit(5)
 
     total_sector_deliver = sector_deliveries.sum(:quantity)

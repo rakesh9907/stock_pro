@@ -1,7 +1,16 @@
 class DeliveriesController < ApplicationController
 
   def get_delivery
-    StockDataJob.perform_later(delivery_params, price_params)
+    final_delivery = params['data'].map do |delivery_data|
+      delivery_params(delivery_data)
+    end
+
+    final_price = params['data'].map do |price_data|
+      price_params(price_data)
+    end
+    
+    Delivery.insert_all(final_delivery)
+    Price.insert_all(final_price)
     render json: { message: 'Delivery are updating'}
   end
 
@@ -56,8 +65,21 @@ class DeliveriesController < ApplicationController
 
   private
 
-  def delivery_params
-    params.permit(
+  # def delivery_params
+  #   params.permit(
+  #     :stock_id,
+  #     :quantity,
+  #     :percentage,
+  #     :volume,
+  #     :delivery_time,
+  #     :volume_time,
+  #     :date,
+  #     :trades
+  #   )
+  # end
+
+  def delivery_params(data)
+    data.permit(
       :stock_id,
       :quantity,
       :percentage,
@@ -65,12 +87,11 @@ class DeliveriesController < ApplicationController
       :delivery_time,
       :volume_time,
       :date,
-      :trades
-    )
+      :trades)
   end
 
-  def price_params
-    params.permit(
+  def price_params(data)
+    data.permit(
       :stock_id,
       :open,
       :close,
@@ -90,5 +111,4 @@ class DeliveriesController < ApplicationController
                 .where(association_name => { date: date })
                 .distinct
   end
-
 end

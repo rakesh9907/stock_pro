@@ -10,15 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_03_144037) do
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
-
+ActiveRecord::Schema[7.2].define(version: 2024_11_08_130135) do
   create_table "alert_items", force: :cascade do |t|
-    t.bigint "stock_id", null: false
+    t.integer "stock_id", null: false
     t.decimal "price"
     t.date "date"
-    t.bigint "alert_id", null: false
+    t.integer "alert_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["alert_id"], name: "index_alert_items_on_alert_id"
@@ -38,7 +35,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_03_144037) do
   end
 
   create_table "deliveries", force: :cascade do |t|
-    t.bigint "stock_id", null: false
+    t.integer "stock_id", null: false
     t.decimal "quantity"
     t.decimal "percentage"
     t.decimal "volume"
@@ -54,14 +51,14 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_03_144037) do
 
   create_table "industries", force: :cascade do |t|
     t.string "name"
-    t.bigint "sector_id", null: false
+    t.integer "sector_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["sector_id"], name: "index_industries_on_sector_id"
   end
 
   create_table "industry_deliveries", force: :cascade do |t|
-    t.bigint "industry_id", null: false
+    t.integer "industry_id", null: false
     t.decimal "quantity"
     t.decimal "percentage"
     t.decimal "volume"
@@ -76,7 +73,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_03_144037) do
   end
 
   create_table "prices", force: :cascade do |t|
-    t.bigint "stock_id", null: false
+    t.integer "stock_id", null: false
     t.decimal "open"
     t.decimal "close"
     t.decimal "high"
@@ -92,7 +89,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_03_144037) do
   end
 
   create_table "sector_deliveries", force: :cascade do |t|
-    t.bigint "sector_id", null: false
+    t.integer "sector_id", null: false
     t.decimal "quantity"
     t.decimal "percentage"
     t.decimal "volume"
@@ -114,7 +111,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_03_144037) do
 
   create_table "stocks", force: :cascade do |t|
     t.string "name"
-    t.bigint "industry_id", null: false
+    t.integer "industry_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "symbol"
@@ -123,8 +120,8 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_03_144037) do
   end
 
   create_table "sub_bookmarks", force: :cascade do |t|
-    t.bigint "stock_id", null: false
-    t.bigint "bookmark_id", null: false
+    t.integer "stock_id", null: false
+    t.integer "bookmark_id", null: false
     t.decimal "added_price"
     t.datetime "added_date"
     t.datetime "created_at", null: false
@@ -134,7 +131,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_03_144037) do
   end
 
   create_table "technicals", force: :cascade do |t|
-    t.bigint "stock_id", null: false
+    t.integer "stock_id", null: false
     t.decimal "rsi"
     t.decimal "rs"
     t.date "date"
@@ -147,7 +144,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_03_144037) do
   end
 
   create_table "weekly_deliveries", force: :cascade do |t|
-    t.bigint "stock_id", null: false
+    t.integer "stock_id", null: false
     t.date "start_date"
     t.date "end_date"
     t.decimal "delivery"
@@ -158,6 +155,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_03_144037) do
     t.decimal "total_trades"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.decimal "quantity"
     t.index ["stock_id"], name: "index_weekly_deliveries_on_stock_id"
   end
 

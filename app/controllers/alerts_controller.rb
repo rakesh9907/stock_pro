@@ -35,31 +35,31 @@ class AlertsController < ApplicationController
 
   # /////////////////////////////////////////////////Alert Item /////////////////////////////////
 
-  def show_item
-    render json: @alert_item, serializer: AlertItemSerializer
-  end
+  # def show_item
+  #   render json: @alert_item, serializer: AlertItemSerializer
+  # end
 
-  def create_item
-    @alert_item = AlertItem.new(alert_item_params)
-    if @alert_item.save
-      render json: @alert_item, serializer: AlertItemSerializer
-    else
-      render json: @alert_item.errors, status: :unprocessable_entity
-    end
-  end
+  # def create_item
+  #   @alert_item = AlertItem.new(alert_item_params)
+  #   if @alert_item.save
+  #     render json: @alert_item, serializer: AlertItemSerializer
+  #   else
+  #     render json: @alert_item.errors, status: :unprocessable_entity
+  #   end
+  # end
 
-  def update_item
-    if @alert_item.update(alert_item_params)
-      render json: @alert_item, serializer: AlertItemSerializer
-    else
-      render json: @alert_item.errors, status: :unprocessable_entity
-    end
-  end
+  # def update_item
+  #   if @alert_item.update(alert_item_params)
+  #     render json: @alert_item, serializer: AlertItemSerializer
+  #   else
+  #     render json: @alert_item.errors, status: :unprocessable_entity
+  #   end
+  # end
 
-  def destroy_item
-    @alert_item.destroy
-    render json: @alert, serializer: AlertSerializer
-  end
+  # def destroy_item
+  #   @alert_item.destroy
+  #   render json: @alert, serializer: AlertSerializer
+  # end
 
   private
 
@@ -70,12 +70,13 @@ class AlertsController < ApplicationController
   end
 
   def alert_params
-    params.require(:alert).permit(:name)
+    binding.pry
+    params.permit(:name)
   end
 
-  def set_alert_item
-    @alert_item = StockAlert.find(params[:id])
-  end
+  # def set_alert_item
+  #   @alert_item = Alert.find(params[:id])
+  # end
 
   def alert_item_params
     params.require(:alert_item).permit(:stock_id, :price, :date, :alert_id)

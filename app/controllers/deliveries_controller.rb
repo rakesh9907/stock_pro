@@ -1,6 +1,7 @@
 class DeliveriesController < ApplicationController
 
-  def get_delivery
+  def get_delivery # fetching data from NSE
+    return { message: "please pass date in query params"} unless params['date']
     final_delivery = params['data'].map do |delivery_data|
       delivery_params(delivery_data)
     end
@@ -11,12 +12,10 @@ class DeliveriesController < ApplicationController
     
     Delivery.insert_all(final_delivery)
     Price.insert_all(final_price)
-    render json: { message: 'Delivery are updating'}
-  end
 
-  def fetch_delivery
     sectors = Sector.all
     industries = Industry.all
+    date = params['date']
     
     industries.each do |industry|
       IndustryDataJob.perform_later(industry.id, date)
@@ -25,8 +24,7 @@ class DeliveriesController < ApplicationController
     sectors.each do |sector|
       SectorDataJob.perform_later(sector.id, date)
     end
-    
-    render json: {message: "Delivery Updating"}
+    render json: { message: 'Delivery are updating'}
   end
 
   def weekly_delivery
@@ -35,7 +33,7 @@ class DeliveriesController < ApplicationController
 
     stocks = Stock.all
     stocks.each do |stock|
-      WeeklyDataJob.perform_now(stock.symbol, start_date, end_date)
+      WeeklyDataJob.perform_later(stock.symbol, start_date, end_date)
     end
     render json: {message: "Weekly delivery Updating"}
   end
@@ -47,6 +45,7 @@ class DeliveriesController < ApplicationController
   def delivery_industry
     render json: fetch_deliveries(params, Industry, :industry_deliveries), each_serializer: IndustrySerializer
   end
+
   def delivery_stock
     render json: fetch_deliveries(params, Stock, :deliveries), each_serializer: StockSerializer
   end
@@ -64,19 +63,6 @@ class DeliveriesController < ApplicationController
   # AlertItem Table have with stock_id, price, date, alert_id
 
   private
-
-  # def delivery_params
-  #   params.permit(
-  #     :stock_id,
-  #     :quantity,
-  #     :percentage,
-  #     :volume,
-  #     :delivery_time,
-  #     :volume_time,
-  #     :date,
-  #     :trades
-  #   )
-  # end
 
   def delivery_params(data)
     data.permit(
@@ -107,8 +93,7 @@ class DeliveriesController < ApplicationController
   def fetch_deliveries(params, model_class, association_name)
     date = params['date'] || Date.today.strftime("%d-%m-%y")
     model_class.joins(association_name) 
-                .where("#{association_name.to_s.singularize}.delivery_time > ?", 1.5)
-                .where(association_name => { date: date })
+                .where("#{association_name.to_s}.delivery_time > ?", 1.5)
                 .distinct
   end
 end

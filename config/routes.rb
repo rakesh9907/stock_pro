@@ -22,12 +22,15 @@ Rails.application.routes.draw do
       get 'industry_stocks', to: 'stocks#industry_stocks'
     end
   end
-  resources :stocks, only: [:index,:show, :update, :destroy]
+  resources :stocks, only: [:index,:show, :update, :destroy] do
+    collection do
+      get 'get_holc', to: 'stocks#get_holc'
+    end
+  end
   
   resources :deliveries, only: [] do
     collection do
       post 'get', to: 'deliveries#get_delivery'
-      get 'fetch', to: 'deliveries#fetch_delivery'
       get 'weekly', to: 'deliveries#weekly_delivery'
       get 'sector', to: 'deliveries#delivery_sector'
       get 'industries', to: 'deliveries#delivery_industry'
@@ -38,4 +41,6 @@ Rails.application.routes.draw do
   resources :bookmarks do
     resources :sub_bookmarks
   end
+
+  resources :alerts
 end

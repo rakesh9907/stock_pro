@@ -22,7 +22,7 @@ class ExternalApiService
   end
 
   def fetch_delivery(symbol, start_date, end_date)
-    target_url = "http://www.nseindia.com/api/historical/securityArchives?from=#{start_date}&to=#{end_date}&symbol=#{symbol}&dataType=priceVolumeDeliverable&series=ALL"
+    target_url = "http://www.nseindia.com/api/historical/securityArchives?from=#{start_date}&to=#{end_date}&symbol=#{symbol}&dataType=priceVolumeDeliverable&series=EQ"
     
     retries = 0
 
